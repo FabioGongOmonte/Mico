@@ -5,6 +5,8 @@ mirrored_bottom = bottom.resize(0.5).fx(vfx.mirror_x) # mirror the video
 
 top = VideoFileClip("top.mp4").resize(0.5)      # import the video that will be at the top
 
+#find some way to sync both audios and delete the audio of bottom
+
 final_clip = clips_array([[top],
                           [mirrored_bottom]])
 audio_top = top.audio
