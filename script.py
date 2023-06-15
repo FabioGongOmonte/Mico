@@ -28,5 +28,4 @@ def mico_videos(bot_location, top_location, mirror_bot=False, mirror_top=False):
     final_clip = final_clip.set_audio(audio_top)
     final_clip = final_clip.subclip(t_end = 10)
     
-
     final_clip.resize(width = bottom.w + bottom.w).write_videofile("mico_video.mp4")
