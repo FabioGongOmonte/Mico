@@ -39,7 +39,9 @@ def home():
         mico_videos(bot_video, top_video, mirror_bot, mirror_top)
 
         # Send the processed video file for download
-        return render_template('download.html')
+        
+        return send_from_directory(os.getcwd(),"mico_video.mp4", as_attachment=True, download_name="video.mp4", mimetype="video/mp4")
+        # return render_template('download.html')
     
     return render_template('home.html')
 
