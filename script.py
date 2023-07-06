@@ -18,16 +18,19 @@ def mico_videos(bot_location, top_location, mirror_bot=True, mirror_top=False):
     #Sync the music
 
     results = find_offset_between_files(bot_location, top_location)
-    offset = abs(results["time_offset"])
+    offset = results["time_offset"]
 
-    bottom = bottom.subclip(t_start = offset)
+    if offset<0:
+        bottom = bottom.subclip(t_start = abs(offset))
+    else:
+        top = top.subclip(t_start = offset)
 
     final_clip = clips_array([[top],
                             [bottom]])
     audio_top = top.audio
 
     final_clip = final_clip.set_audio(audio_top)
-    final_clip = final_clip.subclip(t_end = bottom.duration)
+    final_clip = final_clip.subclip(t_end = min(bottom.duration, top.duration))
     
 
     final_clip.resize(width = bottom.w + bottom.w).write_videofile("mico_video.mp4", logger=proglog.TqdmProgressBarLogger(print_messages=False))
@@ -44,12 +47,15 @@ def mico_sync(bot_location, top_location):
     #Sync the music
 
     results = find_offset_between_files(bot_location, top_location)
-    offset = abs(results["time_offset"])
+    offset = results["time_offset"]
 
-    bottom = bottom.subclip(t_start = offset)
+    if offset<0:
+        bottom = bottom.subclip(t_start = abs(offset))
+    else:
+        top = top.subclip(t_start = offset)
 
     final_clip = bottom.set_audio(top.audio)
-    final_clip = final_clip.subclip(t_end = bottom.duration)
+    final_clip = final_clip.subclip(t_end = min(bottom.duration, top.duration))
     
     final_clip.write_videofile("mico_video.mp4", logger=proglog.TqdmProgressBarLogger(print_messages=False))
     final_clip.close()

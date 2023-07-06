@@ -50,7 +50,8 @@ def preview():
         title.configure(text=ytObject.title, text_color="black")
         
         bot_title.grid(row=3,column=0,columnspan=2, padx=20, pady=10)
-        upload.grid(row=4,column=0,columnspan=2, padx=20, pady=10)
+        upload.grid(row=4,column=0, padx=20, pady=10)
+        c2.grid(row=4, column=1)
 
     except Exception as e:
         title.configure(text="Enter a link !", text_color="black")
@@ -71,7 +72,7 @@ def startDownload(bot_name):
         progressBar.destroy()
         pPercentage.configure(text="Syncing videos based on audio...(This may take some time)", text_color = "black")
         infiniteBar.grid(row=7,column=0,columnspan=2, padx=20, pady=10)
-        mico_videos(bot_name, "top_for_mico.mp4", mirror_bot = True, mirror_top= var1 )
+        mico_videos(bot_name, "top_for_mico.mp4", mirror_bot = var2, mirror_top= var1 )
         os.remove("top_for_mico.mp4")
         infiniteBar.destroy()
         os.startfile("mico_video.mp4")
@@ -236,6 +237,12 @@ submit_btn.grid(row=2, column=0, columnspan=2, padx=20, pady=10)
 bot_title = ctk.CTkLabel(app.home_frame, text="")
 
 upload = ctk.CTkButton(app.home_frame, text="Upload your video (Mico will mirror it)", command=threading.Thread(target=uploadBot).start)
+
+# Mirror button for bottom video
+
+var2 = tk.IntVar()
+c2 = ctk.CTkCheckBox(app.home_frame, text='Mirror it ?',variable=var2, onvalue=True, offvalue=False)
+
 
 # Downloading progress
 
